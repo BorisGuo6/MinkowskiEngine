@@ -123,7 +123,7 @@ else
 	COMMON_FLAGS += -DNDEBUG -O3
 endif
 
-WARNINGS := -Wall -Wcomment -Wno-sign-compare -Wno-deprecated-declarations
+WARNINGS := -Wall -Wcomment -Wno-sign-compare
 
 # Automatic dependency generation (nvcc is handled separately)
 CXXFLAGS += -MMD -MP
@@ -133,11 +133,11 @@ CXXFLAGS += -ffast-math -funsafe-math-optimizations -fno-math-errno
 
 # BATCH FIRST
 CXXFLAGS += -DBATCH_FIRST=1
+CXXFLAGS += -Wno-deprecated-declarations
 
 # Complete build flags.
 COMMON_FLAGS += $(foreach includedir,$(INCLUDE_DIRS),-I$(includedir)) \
 	     -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=$(EXTENSION_NAME) \
-	     -D_GLIBCXX_USE_CXX11_ABI=$(WITH_ABI)
 
 CXXFLAGS += -fopenmp -fPIC -fwrapv -std=c++14 $(COMMON_FLAGS) $(WARNINGS)
 NVCCFLAGS += -std=c++14 -ccbin=$(CXX) -Xcompiler -fPIC $(COMMON_FLAGS)
